@@ -55,8 +55,9 @@ public class ModifiFicheForm{
         String codePostal =getValeurChamp( request, CHAMP_CP );
         String adresse = getValeurChamp( request, CHAMP_ADRESSE );
         
-        //Récupération des données associées à la session
-    	//Utilisateur utilisateur=new Utilisateur();
+        
+        //Récupération des données de l'utilisateur courant
+    	
     	Utilisateur utilisateur=utilisateurDao.trouver(login1);
     	
         String parameterValue1=utilisateur.getLogin();
@@ -96,7 +97,7 @@ public class ModifiFicheForm{
       }
       else {ville=parameterValue6;}
               
-           
+       //modification des données utilisateur
             System.out.println(login2);
             utilisateur.setEmail(email);
             utilisateur.setAdresse(adresse);
@@ -129,6 +130,9 @@ public class ModifiFicheForm{
         private void setErreur( String champ, String message ) {
             erreurs.put( champ, message );
         }
+        
+//################################################Tout ça pour le moment je ne le fait pas ^^####################################################################        
+
         
         /*
          * Appel Ã  la validation de l'adresse email reÃ§ue et initialisation de la
