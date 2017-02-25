@@ -85,7 +85,7 @@ public class InscriptionForm {
         
 
         if ( erreurs.isEmpty() ) {
-            resultat = "Succès de l'inscription.";
+            resultat = "Succ�s de l'inscription.";
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setIdUtilisateur(Integer.parseInt(idUtilisateur));
             utilisateur.setLogin(login);
@@ -108,7 +108,7 @@ public class InscriptionForm {
             utilisateurDao.creer(utilisateur);
             return utilisateur;
         } else {
-            resultat = "Échec de l'inscription.";
+            resultat = "Echec de l'inscription.";
             return utilisateurTest;
         }
 

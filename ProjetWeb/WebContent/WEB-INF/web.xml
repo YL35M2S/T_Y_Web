@@ -37,13 +37,21 @@
     <url-pattern>/bonjour</url-pattern>
   </servlet-mapping>
   <servlet>
-  <servlet-name>fiche</servlet-name>
+    <servlet-name>fiche</servlet-name>
     <servlet-class>proj.servlets.Fiche</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>fiche</servlet-name>
     <url-pattern>/fiche</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>modifiFiche</servlet-name>
+    <servlet-class>proj.servlets.ModifiFiche</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modifiFiche</servlet-name>
+    <url-pattern>/modifiFiche</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>video</servlet-name>
     <servlet-class>proj.servlets.video</servlet-class>
