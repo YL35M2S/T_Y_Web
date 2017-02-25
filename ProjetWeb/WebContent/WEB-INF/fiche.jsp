@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     
 </head>
-<body>
+<body id="page-top" class="index">
 <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
@@ -67,6 +67,7 @@
         <!-- /.container-fluid -->
     </nav>
     
+    
     <header>
         <div class="container">
             <div class="row">
@@ -102,7 +103,11 @@
 	            	 </table>
 
              </div>
-            		
+            <div class="col-lg-12">
+             			 <hr class="star-light">
+            			 <a href="bonjour"  class="btn btn-outline"><i class="fa"></i> Retour</a>
+            			 
+            </div>	
         </div>
         
       </div>
