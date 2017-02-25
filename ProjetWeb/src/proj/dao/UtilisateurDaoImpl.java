@@ -106,7 +106,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	     
 	    try{
 	    	connexion = daoFactory.getConnection();
-	    	preparedStatement = DAOFactory.initialisationRequetePreparee(connexion, SQL_UPDATE_UTILISATEUR, false, login, email, adresse, codePostal, ville, login);
+	    	preparedStatement = DAOFactory.initialisationRequetePreparee(connexion, SQL_UPDATE_UTILISATEUR, false, login, adresse, email, codePostal, ville, login);
 	    	statut = preparedStatement.executeUpdate();
 	    	if (statut==0){System.out.println("ok");};
 	    } 	catch ( SQLException e ) {
@@ -115,6 +115,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 				finally {
 				fermeturesSilencieuses( preparedStatement, connexion );
 				}  
+	 
+	    
     }
     
     

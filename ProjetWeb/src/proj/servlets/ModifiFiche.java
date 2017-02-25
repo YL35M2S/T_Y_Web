@@ -20,7 +20,7 @@ public class ModifiFiche extends HttpServlet {
     public static final String ATT_SESSION_USER = "sessionUtilisateur";
     public static final String ATT_FORM         = "form";
 	public static final String MODIF_FICHE      = "/WEB-INF/modifiFiche.jsp";
-	//public static final String FICHE      		= "/WEB-INF/fiche.jsp";
+	public static final String FICHE      		= "/WEB-INF/fiche.jsp";
     
 	private UtilisateurDao     utilisateurDao;
 
@@ -42,11 +42,30 @@ public class ModifiFiche extends HttpServlet {
 		// TODO Auto-generated method stub
 		ModifiFicheForm form = new ModifiFicheForm( utilisateurDao );
 		Utilisateur utilisateur = form.modifieUtilisateur( request );
+		
+		HttpSession session = request.getSession();
+		
+		if ( form.getErreurs().isEmpty() ) {
+            session.setAttribute( ATT_SESSION_USER, utilisateur );
+            
+            
+            
+        } else {
+            session.setAttribute( ATT_SESSION_USER, null );
+        }
+
+
 		request.setAttribute( ATT_FORM, form );
         request.setAttribute( ATT_USER, utilisateur );
-        this.getServletContext().getRequestDispatcher( MODIF_FICHE ).forward( request, response );
         
-        
+        if ( session.getAttribute( ATT_SESSION_USER ) == null ) {
+            /* Redirection vers la page d'accueil */
+        	this.getServletContext().getRequestDispatcher( MODIF_FICHE ).forward( request, response );
+        } else {
+            /* Affichage de la page restreinte */
+        	
+            this.getServletContext().getRequestDispatcher( FICHE ).forward( request, response );
+          }        
 	}
 
 }

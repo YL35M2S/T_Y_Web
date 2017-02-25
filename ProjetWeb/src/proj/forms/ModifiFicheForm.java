@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import proj.beans.Utilisateur;
 import proj.dao.UtilisateurDao;
@@ -11,7 +12,8 @@ import proj.dao.UtilisateurDao;
 public class ModifiFicheForm{
 	
 	public static final String CHAMP_EMAIL 	= "email";
-	public static final String CHAMP_LOGIN	= "login";
+	public static final String CHAMP_OLD_LOGIN	= "login1";
+	public static final String CHAMP_NEW_LOGIN	= "login2";
     public static final String CHAMP_ADRESSE= "adresse";
     public static final String CHAMP_CP		= "codePostal";
     public static final String CHAMP_VILLE 	= "ville";
@@ -38,23 +40,27 @@ public class ModifiFicheForm{
 	public Utilisateur modifieUtilisateur( HttpServletRequest request ) {
     	
     	//Récupération du login de session
-        
-		String log=(String)request.getSession().getValue("login");
+       /* HttpSession session= request.getSession();
+		utilisateurDao.trouver((String)session.getAttribute("login"));
+		System.out.println(utilisateurDao.trouver((String)request.getAttribute("login")));
+		
+		//String log=(String)request.getAttribute("login");
       
-        //System.out.println(log);
-        
+        */
         //Récupération des champs du formulaire
-    	String login = getValeurChamp( request, CHAMP_LOGIN );
+		String login1 = getValeurChamp( request, CHAMP_OLD_LOGIN );
+    	String login2 = getValeurChamp( request, CHAMP_NEW_LOGIN );
     	String email = getValeurChamp( request, CHAMP_EMAIL );
     	String ville = getValeurChamp( request, CHAMP_VILLE );
         String codePostal =getValeurChamp( request, CHAMP_CP );
         String adresse = getValeurChamp( request, CHAMP_ADRESSE );
         
         //Récupération des données associées à la session
-    	Utilisateur utilisateur=new Utilisateur();
-
-        utilisateur=utilisateurDao.trouver(log);
+    	//Utilisateur utilisateur=new Utilisateur();
+    	Utilisateur utilisateur=utilisateurDao.trouver(login1);
+    	
         String parameterValue1=utilisateur.getLogin();
+        System.out.println(parameterValue1);
         
         String parameterValue3=utilisateur.getEmail();
         String parameterValue4=utilisateur.getAdresse();
@@ -65,10 +71,10 @@ public class ModifiFicheForm{
         
         //Comparaison des données
         
-    /*  if(login!=null){
-    	  if(login.compareTo("")==0){login=parameterValue1;}
+      if(login2!=null){
+    	  if(login2.compareTo("")==0){login2=parameterValue1;}
       }
-      else {login=parameterValue1;}
+      else {login2=parameterValue1;}
       
       if(email!=null){
     	  if(email.compareTo("")==0){email=parameterValue3;}
@@ -90,15 +96,16 @@ public class ModifiFicheForm{
       }
       else {ville=parameterValue6;}
               
-            utilisateur.setLogin(login);
+            utilisateur.setLogin(login2);
+            System.out.println(login2);
             utilisateur.setEmail(email);
             utilisateur.setAdresse(adresse);
             utilisateur.setVille(ville);
             utilisateur.setCodePostal(Integer.parseInt(codePostal));
-        */   
+          
           //Modification de l'utilisateur dans la base de données
             utilisateurDao.modifier(utilisateur);
-        
+            
             return utilisateur;
        
         
@@ -188,7 +195,7 @@ public class ModifiFicheForm{
             try {
                 validationLogin(login);
             } catch ( FormValidationException e ) {
-                setErreur( CHAMP_LOGIN, e.getMessage() );
+                setErreur( CHAMP_NEW_LOGIN, e.getMessage() );
             }
             utilisateur.setLogin(login);
         }

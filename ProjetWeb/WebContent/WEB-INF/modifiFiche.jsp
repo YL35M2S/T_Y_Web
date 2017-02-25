@@ -62,10 +62,16 @@
             	
             	<form method="post" action="modifiFiche">
             	<table class="table">
-            	
+            		
             		<tr>
-            			<td><label for="login">Login </label></td>
-            			<td><input type="text" class="form-control" id="login" name="login" value="" size="20" maxlength="20" /></td>
+            			<td><label for="login1">Ancien Login <span class="requis">*</span></label></td>
+            			<td><input type="text" class="form-control" id="login1" name="login1" value="" size="20" maxlength="20" /></td>
+            			           		
+            		</tr>
+            		
+            		<tr>
+            			<td><label for="login2">Nouveau Login </label></td>
+            			<td><input type="text" class="form-control" id="login2" name="login2" value="" size="20" maxlength="20" /></td>
             			           		
             		</tr>
             		
