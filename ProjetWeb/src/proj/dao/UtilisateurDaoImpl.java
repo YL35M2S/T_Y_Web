@@ -1,13 +1,14 @@
 package proj.dao;
 
+import static proj.dao.DAOFactory.initialisationRequetePreparee;
+import static proj.dao.DAOUtilitaire.fermeturesSilencieuses;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import proj.beans.Utilisateur;
-import static proj.dao.DAOUtilitaire.*;
-import static proj.dao.DAOFactory.initialisationRequetePreparee;
 
 public class UtilisateurDaoImpl implements UtilisateurDao {
 	
@@ -90,10 +91,9 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 				fermeturesSilencieuses( preparedStatement, connexion );
 				}  
     }
-    
     @Override
-    public void modifier( Utilisateur utilisateur ) throws DAOException{
-    	String 	login 			= utilisateur.getLogin();
+    public void modifier( Utilisateur utilisateur, String login ) throws DAOException{
+    	String 	login1 			= utilisateur.getLogin();
     	String 	motDePasse 		= utilisateur.getMdp();
     	String  email 			= utilisateur.getEmail();
     	String  adresse 		= utilisateur.getAdresse();
@@ -106,7 +106,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	     
 	    try{
 	    	connexion = daoFactory.getConnection();
-	    	preparedStatement = DAOFactory.initialisationRequetePreparee(connexion, SQL_UPDATE_UTILISATEUR, false, login, adresse, email, codePostal, ville, login);
+	    	preparedStatement = DAOFactory.initialisationRequetePreparee(connexion, SQL_UPDATE_UTILISATEUR, false, login, adresse, email, codePostal, ville, login1);
 	    	statut = preparedStatement.executeUpdate();
 	    	if (statut==0){System.out.println("ok");};
 	    } 	catch ( SQLException e ) {

@@ -96,7 +96,7 @@ public class ModifiFicheForm{
       }
       else {ville=parameterValue6;}
               
-            utilisateur.setLogin(login2);
+           
             System.out.println(login2);
             utilisateur.setEmail(email);
             utilisateur.setAdresse(adresse);
@@ -104,7 +104,7 @@ public class ModifiFicheForm{
             utilisateur.setCodePostal(Integer.parseInt(codePostal));
           
           //Modification de l'utilisateur dans la base de données
-            utilisateurDao.modifier(utilisateur);
+            utilisateurDao.modifier(utilisateur,login2);
             
             return utilisateur;
        
