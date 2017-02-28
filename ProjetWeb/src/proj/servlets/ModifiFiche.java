@@ -45,12 +45,11 @@ public class ModifiFiche extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
-
+		utilisateur=(Utilisateur)session.getAttribute(ATT_SESSION_USER);
 		
 		ModifiFicheForm form = new ModifiFicheForm( utilisateurDao, utilisateur );
-		utilisateur=(Utilisateur)session.getAttribute(ATT_USER);
-		String log=(String)session.getAttribute("login");
-		System.out.println(log);
+		
+
 		utilisateur = form.modifieUtilisateur( request );
 
 		

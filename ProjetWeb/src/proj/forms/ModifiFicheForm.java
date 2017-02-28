@@ -12,8 +12,7 @@ import proj.dao.UtilisateurDao;
 public class ModifiFicheForm{
 	
 	public static final String CHAMP_EMAIL 	= "email";
-	//public static final String CHAMP_OLD_LOGIN	= "login1";
-	public static final String CHAMP_NEW_LOGIN	= "login2";
+	public static final String CHAMP_NEW_LOGIN	= "login";
     public static final String CHAMP_ADRESSE= "adresse";
     public static final String CHAMP_CP		= "codePostal";
     public static final String CHAMP_VILLE 	= "ville";
@@ -44,14 +43,13 @@ public class ModifiFicheForm{
     	
     	//Récupération du login de session
 		HttpSession session= request.getSession();
+        utilisateur=(Utilisateur)session.getAttribute("sessionUtilisateur");
+        String log=utilisateur.getLogin();
+    	//System.out.println(log);
 
-//		Utilisateur utilisateur=(Utilisateur)session.getAttribute("utilisateur");
-//		String log=utilisateur.getLogin();
-//		System.out.println(log);
 
         //Récupération des champs du formulaire
-		//String login1 = getValeurChamp( request, CHAMP_OLD_LOGIN );
-    	String login2 = getValeurChamp( request, CHAMP_NEW_LOGIN );
+    	String login = getValeurChamp( request, CHAMP_NEW_LOGIN );
     	String email = getValeurChamp( request, CHAMP_EMAIL );
     	String ville = getValeurChamp( request, CHAMP_VILLE );
         String codePostal =getValeurChamp( request, CHAMP_CP );
@@ -59,15 +57,9 @@ public class ModifiFicheForm{
         
         
         //Récupération des données de l'utilisateur courant
-        //utilisateur=(Utilisateur)session.getAttribute("utilisateur");
-        String log=(String)session.getAttribute("login");
-    	System.out.println(log);
-    	
-       utilisateur=utilisateurDao.trouver(log);
+        utilisateur=utilisateurDao.trouver(log);
     	
         String parameterValue1=utilisateur.getLogin();
-        System.out.println(parameterValue1);
-        
         String parameterValue3=utilisateur.getEmail();
         String parameterValue4=utilisateur.getAdresse();
         String parameterValue5=String.valueOf(utilisateur.getCodePostal());
@@ -77,10 +69,10 @@ public class ModifiFicheForm{
         
         //Comparaison des données
         
-      if(login2!=null){
-    	  if(login2.compareTo("")==0){login2=parameterValue1;}
+      if(login!=null){
+    	  if(login.compareTo("")==0){login=parameterValue1;}
       }
-      else {login2=parameterValue1;}
+      else {login=parameterValue1;}
       
       if(email!=null){
     	  if(email.compareTo("")==0){email=parameterValue3;}
@@ -103,14 +95,13 @@ public class ModifiFicheForm{
       else {ville=parameterValue6;}
               
        //modification des données utilisateur
-            System.out.println(login2);
             utilisateur.setEmail(email);
             utilisateur.setAdresse(adresse);
             utilisateur.setVille(ville);
             utilisateur.setCodePostal(Integer.parseInt(codePostal));
           
           //Modification de l'utilisateur dans la base de données
-            utilisateurDao.modifier(utilisateur,login2);
+            utilisateurDao.modifier(utilisateur,login);
             
             return utilisateur;
        
