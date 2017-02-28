@@ -12,7 +12,7 @@ import proj.dao.UtilisateurDao;
 public class ModifiFicheForm{
 	
 	public static final String CHAMP_EMAIL 	= "email";
-	public static final String CHAMP_OLD_LOGIN	= "login1";
+	//public static final String CHAMP_OLD_LOGIN	= "login1";
 	public static final String CHAMP_NEW_LOGIN	= "login2";
     public static final String CHAMP_ADRESSE= "adresse";
     public static final String CHAMP_CP		= "codePostal";
@@ -31,24 +31,26 @@ public class ModifiFicheForm{
     
     
     private UtilisateurDao      utilisateurDao;
+    private Utilisateur      utilisateur;
     
-    public ModifiFicheForm( UtilisateurDao utilisateurDao ) {
+    public ModifiFicheForm( UtilisateurDao utilisateurDao, Utilisateur utilisateur ) {
         this.utilisateurDao = utilisateurDao;
+        this.utilisateur = utilisateur;
     }
     
     
+
 	public Utilisateur modifieUtilisateur( HttpServletRequest request ) {
     	
     	//Récupération du login de session
-       /* HttpSession session= request.getSession();
-		utilisateurDao.trouver((String)session.getAttribute("login"));
-		System.out.println(utilisateurDao.trouver((String)request.getAttribute("login")));
-		
-		//String log=(String)request.getAttribute("login");
-      
-        */
+		HttpSession session= request.getSession();
+
+//		Utilisateur utilisateur=(Utilisateur)session.getAttribute("utilisateur");
+//		String log=utilisateur.getLogin();
+//		System.out.println(log);
+
         //Récupération des champs du formulaire
-		String login1 = getValeurChamp( request, CHAMP_OLD_LOGIN );
+		//String login1 = getValeurChamp( request, CHAMP_OLD_LOGIN );
     	String login2 = getValeurChamp( request, CHAMP_NEW_LOGIN );
     	String email = getValeurChamp( request, CHAMP_EMAIL );
     	String ville = getValeurChamp( request, CHAMP_VILLE );
@@ -57,8 +59,11 @@ public class ModifiFicheForm{
         
         
         //Récupération des données de l'utilisateur courant
+        //utilisateur=(Utilisateur)session.getAttribute("utilisateur");
+        String log=(String)session.getAttribute("login");
+    	System.out.println(log);
     	
-    	Utilisateur utilisateur=utilisateurDao.trouver(login1);
+       utilisateur=utilisateurDao.trouver(log);
     	
         String parameterValue1=utilisateur.getLogin();
         System.out.println(parameterValue1);

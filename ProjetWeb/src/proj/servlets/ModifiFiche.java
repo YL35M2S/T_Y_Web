@@ -23,15 +23,18 @@ public class ModifiFiche extends HttpServlet {
 	public static final String FICHE      		= "/WEB-INF/fiche.jsp";
     
 	private UtilisateurDao     utilisateurDao;
-
+	private Utilisateur     utilisateur;
+	
     public void init() throws ServletException {
         /* Récupération d'une instance de notre DAO Utilisateur */
         this.utilisateurDao = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
+        
     }
+
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		HttpSession session = request.getSession(true);
 		this.getServletContext().getRequestDispatcher( MODIF_FICHE ).forward( request, response );
 	}
 
@@ -40,10 +43,17 @@ public class ModifiFiche extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ModifiFicheForm form = new ModifiFicheForm( utilisateurDao );
-		Utilisateur utilisateur = form.modifieUtilisateur( request );
 		
 		HttpSession session = request.getSession();
+
+		
+		ModifiFicheForm form = new ModifiFicheForm( utilisateurDao, utilisateur );
+		utilisateur=(Utilisateur)session.getAttribute(ATT_USER);
+		String log=(String)session.getAttribute("login");
+		System.out.println(log);
+		utilisateur = form.modifieUtilisateur( request );
+
+		
 		
 		if ( form.getErreurs().isEmpty() ) {
             session.setAttribute( ATT_SESSION_USER, utilisateur );
@@ -59,10 +69,10 @@ public class ModifiFiche extends HttpServlet {
         request.setAttribute( ATT_USER, utilisateur );
         
         if ( session.getAttribute( ATT_SESSION_USER ) == null ) {
-            /* Redirection vers la page d'accueil */
+            /* Redirection vers la page modif */
         	this.getServletContext().getRequestDispatcher( MODIF_FICHE ).forward( request, response );
         } else {
-            /* Affichage de la page restreinte */
+            /* Affichage de la page fiche avec les modifs effectu�es*/
         	
             this.getServletContext().getRequestDispatcher( FICHE ).forward( request, response );
           }        
